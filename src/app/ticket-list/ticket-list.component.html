@@ -1,0 +1,65 @@
+<h3 class="mt-5 mb-3">Ticket List</h3>
+
+<!-- Champ de saisie pour le filtrage -->
+<div class="d-flex mb-3">
+    <input type="text" class="form-control" #queryText style="width: 150px; margin-right: 10px;" placeholder="Search tickets">
+    <button class="btn btn-outline-secondary" type="button" (click)="filterTickets(queryText.value)">Search</button>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>
+                Description
+                <span>
+                    <button type="button" class="btn btn-light btn-sm" (click)="sortTickets('description', 'asc')">
+                        <i class="bi bi-arrow-up"></i>
+                    </button>
+                    <button type="button" class="btn btn-light btn-sm" (click)="sortTickets('description', 'desc')">
+                        <i class="bi bi-arrow-down"></i>
+                    </button>
+                </span>
+            </th>
+            <th>
+                Status
+                <span>
+                    <button type="button" class="btn btn-light btn-sm" (click)="sortTickets('status', 'asc')">
+                        <i class="bi bi-arrow-up"></i>
+                    </button>
+                    <button type="button" class="btn btn-light btn-sm" (click)="sortTickets('status', 'desc')">
+                        <i class="bi bi-arrow-down"></i>
+                    </button>
+                </span>
+            </th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ticket of tickets">
+            <td>{{ticket.ticketId}}</td>
+            <td>{{ticket.description}}</td>
+            <td>{{ticket.status}}</td>
+            <td>{{ ticket.date | date: 'MM/dd/yy' }}</td>
+            <td>
+                <button class="btn btn-sm btn-danger mx-1" (click)="deleteTicket(ticket.ticketId)">Delete</button>
+                <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit', ticket.ticketId]">Edit</button>
+            </td>
+        </tr>
+        <tr *ngIf="tickets.length === 0">
+            <td colspan="5" class="text-center">No tickets found.</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-left">
+                <button class="btn btn-primary" [routerLink]="['/new']">Add New</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-between">
+    <button class="btn btn-outline-primary" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{currentPage}}</span>
+    <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="currentPage * pageSize >= totalTickets">Next</button>
+</div>

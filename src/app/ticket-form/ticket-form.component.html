@@ -1,0 +1,48 @@
+<app-home></app-home>
+
+<h2 class="mt-5 mb-3 lead">Create or Edit a Ticket</h2>
+<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+
+    <div class="row mb-3">
+
+        <div class="col">
+            <label class="form-label">Ticket ID:</label>
+            <input class="form-control" type="number" formControlName="ticketId" placeholder="Enter Ticket ID" [readonly]="isEditMode">
+            <small class="text-danger" *ngIf="ticketForm.get('ticketId')?.invalid && ticketForm.get('ticketId')?.touched">
+                Ticket ID is required
+            </small>
+        </div>
+
+        <div class="col">
+            <label class="form-label">Description:</label>
+            <input class="form-control" type="text" formControlName="description" placeholder="Enter Ticket Description">
+            <small class="text-danger" *ngIf="ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched">
+                Description is required
+            </small>
+        </div>
+
+        <div class="col">
+            <label class="form-label">Status:</label>
+            <select class="form-control" formControlName="status">
+                <option value="">Select Status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+            </select>
+            <small class="text-danger" *ngIf="ticketForm.get('status')?.invalid && ticketForm.get('status')?.touched">
+                Status is required
+            </small>
+        </div>
+
+        <div class="col">
+            <label class="form-label">Date:</label>
+            <input class="form-control" type="date" formControlName="date">
+            <small class="text-danger" *ngIf="ticketForm.get('date')?.invalid && ticketForm.get('date')?.touched">
+                Date is required
+            </small>
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="ticketForm.invalid">Submit</button>
+
+</form>
