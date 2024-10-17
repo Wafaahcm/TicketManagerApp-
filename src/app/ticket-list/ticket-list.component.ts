@@ -25,7 +25,7 @@ export class TicketListComponent implements OnInit {
   loadTickets(): void {
     this.ticketService.getTickets(undefined, undefined, undefined, this.currentPage, this.pageSize).subscribe(tickets => {
       this.tickets = tickets; // Set the current tickets
-      // Replace 100 with the actual total number of tickets from your API
+      this.allTickets = [...tickets];
       this.totalTickets = 100; // Update with the real total count
     });
   }
